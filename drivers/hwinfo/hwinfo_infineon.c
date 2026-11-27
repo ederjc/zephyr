@@ -13,6 +13,12 @@
 
 #include <cy_syslib.h>
 
+/* CAT1A PDL exposes these masks even without HF clock supervision. */
+#if !defined(CONFIG_SOC_FAMILY_PSOC6) || !defined(SRSS_MASK_HFCSV) || \
+	(SRSS_MASK_HFCSV != 0U)
+#define INFINEON_HAS_CLOCK_RESET 1
+#endif
+
 ssize_t z_impl_hwinfo_get_device_id(uint8_t *buffer, size_t length)
 {
 	uint64_t uid = sys_cpu_to_be64(Cy_SysLib_GetUniqueId());
@@ -104,9 +110,11 @@ int z_impl_hwinfo_get_reset_cause(uint32_t *cause)
 		flags |= RESET_HARDWARE;
 	}
 
+#ifdef INFINEON_HAS_CLOCK_RESET
 	if (reason & (CY_SYSLIB_RESET_CSV_LOSS_WAKEUP | CY_SYSLIB_RESET_CSV_ERROR_WAKEUP)) {
 		flags |= RESET_CLOCK;
 	}
+#endif
 
 #ifdef CY_SYSLIB_RESET_OVDVCCD
 	if (reason & CY_SYSLIB_RESET_OVDVCCD) {
@@ -128,8 +136,11 @@ int z_impl_hwinfo_clear_reset_cause(void)
 
 int z_impl_hwinfo_get_supported_reset_cause(uint32_t *supported)
 {
-	*supported = (RESET_WATCHDOG | RESET_SOFTWARE | RESET_HARDWARE | RESET_CLOCK |
+	*supported = (RESET_WATCHDOG | RESET_SOFTWARE | RESET_HARDWARE |
 		      RESET_LOW_POWER_WAKE |
+#ifdef INFINEON_HAS_CLOCK_RESET
+		      RESET_CLOCK |
+#endif
 #ifdef CY_SYSLIB_RESET_PORVDDD
 		      RESET_POR |
 #endif
