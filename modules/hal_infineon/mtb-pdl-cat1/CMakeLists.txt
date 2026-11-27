@@ -80,6 +80,14 @@ if(CONFIG_USE_INFINEON_TRNG)
   zephyr_library_sources(${pdl_drv_dir}/source/cy_crypto_core_trng_v2.c)
 endif()
 
+if(CONFIG_SOC_CY8C624ABZI_S2D44 AND CONFIG_USE_INFINEON_MXCRYPTO_TRNG)
+  zephyr_library_sources(
+    ${pdl_drv_dir}/source/cy_crypto_core_hw.c
+    ${pdl_drv_dir}/source/cy_crypto_core_mem_v2.c
+    ${pdl_drv_dir}/source/cy_crypto_core_trng.c
+  )
+endif()
+
 if(CONFIG_USE_INFINEON_MXCRYPTOLITE_TRNG)
   zephyr_library_sources(${pdl_drv_dir}/source/cy_cryptolite_trng.c)
 endif()
