@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  PSOC 6 MXAUDIOSS v1 PDM to stereo PCM converter. This is not the
+  MXPDM v2 peripheral described by infineon,pdm.
+
+compatible: "infineon,pdm-v1"
+
+include: ["base.yaml", "pinctrl-device.yaml"]
+
+properties:
+  reg:
+    required: true
+  interrupts:
+    required: true
+  clocks:
+    required: true
+    description: Dedicated AUDIOSS HF1 clock; must be enabled at 8 MHz.
+  pinctrl-0:
+    required: true
+  pinctrl-names:
+    required: true
