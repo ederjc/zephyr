@@ -349,6 +349,13 @@
 			status = "disabled";
 		};
 
+		pdm0: pdm@40a00000 {
+			compatible = "infineon,pdm-v1";
+			reg = <0x40a00000 0x10000>;
+			interrupts = <157 6>;
+			status = "disabled";
+		};
+
 		adc0: adc@409d0000 {
 			compatible = "infineon,adc";
 			reg = <0x409d0000 0x10000>;
