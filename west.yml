@@ -330,7 +330,9 @@ manifest:
       groups:
         - crypto
     - name: mcuboot
-      revision: 725d63c9d5bc1bb572d802e7a768daf504186daf
+      url: https://github.com/ederjc/mcuboot
+      # ifx/725d63c9d5bc1bb572d802e7a768daf504186daf plus 512-byte swap alignment
+      revision: 67d840d505dabf3d0717753594c6dc5b73362ff5
       path: bootloader/mcuboot
       groups:
         - bootloader
