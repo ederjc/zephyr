@@ -58,6 +58,20 @@ config SOC_PSOC6_CM0P_IMAGE_SLEEP
 	  linker script.
 endchoice
 
+config SOC_PSOC6_CM0P_IMAGE_EMBED
+	bool "Embed the Cortex-M0+ prebuilt image in this image"
+	depends on SOC_PSOC6_CM0P_IMAGE_SLEEP
+	default y if !BOOTLOADER_MCUBOOT
+	help
+	  Place the Cortex-M0+ prebuilt image at the start of this image's flash area. The
+	  image at the start of flash must carry it, since the Cortex-M0+ boots first and
+	  starts the Cortex-M4 right behind it.
+
+	  An application chain-loaded by MCUboot leaves it out: the MCUboot image carries the
+	  Cortex-M0+ image, and the application has to start with its Cortex-M4 vector table
+	  right after the MCUboot header. The Cortex-M0+ image keeps running, so its RAM stays
+	  reserved either way.
+
 config SOC_PSOC6_CM0P_IMAGE_ROM_SIZE
 	hex
 	default 0x2000 if SOC_PSOC6_CM0P_IMAGE_SLEEP
