@@ -50,7 +50,7 @@ if(CONFIG_SOC_FAMILY_INFINEON_CAT1
   AND NOT CONFIG_SOC_DIE_PSC3M6)
 
   ## Add catcm0p sleep images for CM0 Devices
-  if(CONFIG_SOC_PSOC6_CM0P_IMAGE_SLEEP)
+  if(CONFIG_SOC_PSOC6_CM0P_IMAGE_EMBED)
     add_subdirectory(cat1cm0p)
   endif()
 
